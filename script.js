@@ -21,7 +21,10 @@ const game = {
     ],
     restart() {
         this.restartgrid();
-        this.restarimg();
+        this.restartimg();
+        gamevalues.turn=1;
+        gamevalues.winner=false;
+        this.headerelement.innerHTML="<h2>Turno de: \"O\"</h2><div id=\"reset\" onclick=\"game.restart()\">Reset</div>"
     },
     checkforwinner() {
         for(let i=0;i<game.combinations.length;i++) {
@@ -32,7 +35,7 @@ const game = {
             if ((s1 === s2 && s1 === s3)&&(s1!=null&&s2!=null&&s3!=null)) {
                 gamevalues.winner=true;
                 if(s1===1) {var ganador = "O";} else {var ganador = "X";}
-                this.headerelement.innerHTML=`<h1>GANADOR: "${ganador}"</h1>`;
+                this.headerelement.innerHTML=`<h1>GANADOR: "${ganador}"</h1><div id="reset" onclick="game.restart()">Reset</div>`;
             }
         }
     },
@@ -42,11 +45,11 @@ const game = {
             game.grid[gridnames[i]] = null;
         }
     },
-    restarimg() {
+    restartimg() {
         for(let i=0;i<game.gridnames.length;i++) {
             let id = game.gridnames[i];
             let editsqr = document.getElementById(id);
-            editsqr.src = "blank.png";
+            editsqr.firstElementChild.src = "blank.png";
         }
     },
     changeturn() {

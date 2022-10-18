@@ -29,6 +29,22 @@ body {
 
 #header {
     margin-top: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#reset {
+    border: 2px black solid;
+    padding: 0.3rem 1rem;
+    font-size: 1.5rem;
+    border-radius: 10px;
+}
+
+#reset:hover {
+    background: #d7d7d7;
+    cursor: pointer;
 }
 
 .m-y {
