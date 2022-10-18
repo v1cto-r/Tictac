@@ -45,7 +45,8 @@ const game = {
                 this.winnerelement.style.display="flex";
             }
         }
-    }, updatescore() {
+    }, 
+    updatescore() {
         gamevalues.oscore.innerHTML=gamevalues.player1;
         gamevalues.xscore.innerHTML=gamevalues.player2;
     },
