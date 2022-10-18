@@ -1,6 +1,8 @@
 const gamevalues = {
     turn: 1,
-    winner: false
+    winner: false,
+    player1: 0,
+    player2: 0
 }
 
 const game = {
@@ -34,10 +36,12 @@ const game = {
             let s3 = game.grid[comb[2]];
             if ((s1 === s2 && s1 === s3)&&(s1!=null&&s2!=null&&s3!=null)) {
                 gamevalues.winner=true;
-                if(s1===1) {var ganador = "O";} else {var ganador = "X";}
+                if(s1===1) {var ganador = "O";gamevalues.player1+=1;} else {var ganador = "X";gamevalues.player2+=1;}
                 this.headerelement.innerHTML=`<h1>GANADOR: "${ganador}"</h1><div id="reset" onclick="game.restart()">Reset</div>`;
             }
         }
+    }, updatescore() {
+        
     },
     restartgrid() {
         for(let i=0;i<game.gridnames.length;i++) {
@@ -77,6 +81,7 @@ function clicksquare(sqrnum) {
                 game.changeturn();
             }
         game.checkforwinner();
+        game.updatescore();
         } else {
             return;
         }

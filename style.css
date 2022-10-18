@@ -35,6 +35,15 @@ body {
     flex-direction: column;
 }
 
+#scoreboard {
+    display: flex;
+    flex-direction: row;
+}
+
+#score1 {
+    margin-right: 2rem;
+}
+
 #reset {
     border: 2px black solid;
     padding: 0.3rem 1rem;
