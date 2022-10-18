@@ -7,15 +7,22 @@
     <link rel="stylesheet" href="style.css">
     <title>Tic-Tac-Toe</title>
 </head>
-<body>
+<body onload="game.randomstart()">
     <div id="main">
         <div id="header">
             <div id="scoreboard">
                 <h2 id="score1">"O": <span id="Oscore">0</span></h2>
                 <h2 id="score2">"X": <span id="Xscore">0</span></h2>
             </div>
-            <h2>Turno de: <span id="turno">"O"</span></h2>
-            <div id="reset" onclick="game.restart()">Reset</div>
+            <div id="description">
+                <h2>Turno de: <span id="turno">"O"</span></h2>
+            </div>
+            <div id="restart">
+                <div id="reset" onclick="game.restart()">Reset</div>
+            </div>
+            <div id="winner">
+                
+            </div>
         </div>
         <div id="playing-grid">
             <div id="sqr1" class="square" onclick="clicksquare('sqr1')">

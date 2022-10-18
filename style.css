@@ -19,6 +19,7 @@ body {
 
 #playing-grid {
     margin-bottom: 10vh;
+    margin-top: 3vh;
     height: 60vh;
     width: 60vh;
     display: grid;
@@ -28,7 +29,7 @@ body {
 }
 
 #header {
-    margin-top: 10vh;
+    margin-top: 5vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -46,14 +47,21 @@ body {
 
 #reset {
     border: 2px black solid;
-    padding: 0.3rem 1rem;
+    padding: 0.3rem 2rem;
     font-size: 1.5rem;
     border-radius: 10px;
+    box-shadow: 0 5px 0 #969696;
+    transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
 }
 
 #reset:hover {
     background: #d7d7d7;
     cursor: pointer;
+}
+
+#reset:active {
+    box-shadow: none;
+    transform: translateY(5px);
 }
 
 .m-y {

@@ -2,12 +2,15 @@ const gamevalues = {
     turn: 1,
     winner: false,
     player1: 0,
-    player2: 0
+    player2: 0,
+    oscore: document.getElementById("Oscore"),
+    xscore: document.getElementById("Xscore")
 }
 
 const game = {
     turnoelement: document.getElementById("turno"),
-    headerelement: document.getElementById("header"),
+    headerelement: document.getElementById("description"),
+    winnerelement: document.getElementById("winner"),
     gridnames: [
         "sqr1","sqr2","sqr3","sqr4","sqr5","sqr6","sqr7","sqr8","sqr9"
     ],
@@ -26,7 +29,8 @@ const game = {
         this.restartimg();
         gamevalues.turn=1;
         gamevalues.winner=false;
-        this.headerelement.innerHTML="<h2>Turno de: \"O\"</h2><div id=\"reset\" onclick=\"game.restart()\">Reset</div>"
+        this.winnerelement.style.display="none";
+        this.randomstart();
     },
     checkforwinner() {
         for(let i=0;i<game.combinations.length;i++) {
@@ -37,11 +41,13 @@ const game = {
             if ((s1 === s2 && s1 === s3)&&(s1!=null&&s2!=null&&s3!=null)) {
                 gamevalues.winner=true;
                 if(s1===1) {var ganador = "O";gamevalues.player1+=1;} else {var ganador = "X";gamevalues.player2+=1;}
-                this.headerelement.innerHTML=`<h1>GANADOR: "${ganador}"</h1><div id="reset" onclick="game.restart()">Reset</div>`;
+                this.winnerelement.innerHTML=`<h2>GANADOR: "${ganador}"</h2>`;
+                this.winnerelement.style.display="flex";
             }
         }
     }, updatescore() {
-        
+        gamevalues.oscore.innerHTML=gamevalues.player1;
+        gamevalues.xscore.innerHTML=gamevalues.player2;
     },
     restartgrid() {
         for(let i=0;i<game.gridnames.length;i++) {
@@ -64,6 +70,28 @@ const game = {
             gamevalues.turn=1;
             this.turnoelement.innerHTML="\"O\"";
         }
+    },
+    randomstart() {
+        let starter = Math.floor(Math.random() * 2)+1;
+        gamevalues.turn = starter;
+        this.changeturn();
+    },
+    checktie() {
+        if (gamevalues.winner==false) {
+            let sum = 0;
+            for(let i=0;i<this.gridnames.length;i++) {
+                let sqr = this.gridnames[i];
+                console.log(sqr);
+                if(this.grid[sqr]!=null) {
+                    sum = sum+1;
+                }
+            }
+            if(sum==9) {
+                console.log("tie")
+                this.winnerelement.innerHTML="<h2>Empate</h2>"
+                this.winnerelement.style.display="flex";
+            }
+        }
     }
 }
 
@@ -81,6 +109,7 @@ function clicksquare(sqrnum) {
                 game.changeturn();
             }
         game.checkforwinner();
+        game.checktie();
         game.updatescore();
         } else {
             return;
