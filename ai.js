@@ -1,4 +1,5 @@
 const ai = {
+    medturn: 2,
     corners: ["sqr7","sqr1","sqr3","sqr9","sqr7","sqr1"],
     fakegrid: {
         sqr1: null, sqr2: null, sqr3: null,
@@ -35,7 +36,28 @@ const ai = {
         if (gamevalues.winner===true||gamevalues.tie===true) {
             return
         }
-        square = this.findBestMove();
+        if (gamevalues.diff===3) {
+            square = this.findBestMove();
+            aiclicksquare(square);
+        } else if (gamevalues.diff===2) {
+            if (this.medturn==1) {
+                this.randommove();
+                this.medturn=2;
+            } else {
+                square = this.findBestMove();
+                aiclicksquare(square);
+                this.medturn=1
+            }
+        } else if (gamevalues.diff===1) {
+            this.randommove();
+        }
+        
+    },
+    randommove() {
+        leftsquares = this.fakeleftmoves();
+        left = leftsquares.length;
+        let random = Math.floor(Math.random() * left);
+        square = leftsquares[random];
         aiclicksquare(square);
     },
     resetai() {
@@ -52,7 +74,6 @@ const ai = {
         } else if (left==0) {
             return 0;
         }
-
         if(isMax) {
             let bestScore = -Infinity;
             for(let b=0;b<availablePlays.length;b++) {
@@ -77,17 +98,13 @@ const ai = {
         let bestScore = -Infinity;
         let bestMove;
         let availablePlays = this.fakeleftmoves();
-        for(let a=0;a<availablePlays.length;a++) {
-            
+        for(let a=0;a<availablePlays.length;a++) { 
             this.fakegrid[availablePlays[a]] = 1;
             let score = this.minimax(0, false);
             this.fakegrid[availablePlays[a]] = null;
-
             if (score>bestScore) {
-
                 bestMove=availablePlays[a];
                 bestScore=score;
-
             }
         }
         return bestMove

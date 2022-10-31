@@ -70,6 +70,11 @@ body {
     margin-bottom: 1rem;
 }
 
+#diff {
+    flex-direction: row;
+    margin-bottom: 1rem;
+}
+
 .mode {
     border: 2px black solid;
     padding: 0.3rem 1.9rem;
@@ -94,6 +99,13 @@ body {
     padding: 0.3rem 2.3rem;
 }
 
+#easy {
+    margin-right: 0.8rem;
+}
+
+#medium {
+    margin-right: 0.8rem;
+}
 
 .m-y {
     border-left: 4px black solid;

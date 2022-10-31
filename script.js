@@ -4,6 +4,7 @@ const gamevalues = {
     winner: false,
     tie: false,
     mode: 2,
+    diff: 3,
     player1: 0,
     player2: 0,
     oscore: document.getElementById("Oscore"),
@@ -14,8 +15,12 @@ const game = {
     turnoelement: document.getElementById("turno"),
     headerelement: document.getElementById("description"),
     winnerelement: document.getElementById("winner"),
+    diff: document.getElementById("diff"),
     jugador1: document.getElementById("onep"),
     jugador2: document.getElementById("twop"),
+    diff1: document.getElementById("easy"),
+    diff2: document.getElementById("medium"),
+    diff3: document.getElementById("hard"),
     gridnames: [
         "sqr1","sqr2","sqr3","sqr4","sqr5","sqr6","sqr7","sqr8","sqr9"
     ],
@@ -114,22 +119,64 @@ const game = {
         if(gamevalues.turn==1) {
             ai.makeplay();
         }
-        this.jugador1.style.background = "#5b5b5b"
-        this.jugador1.style.color = "white"
-        this.jugador1.style.boxShadow = "0 5px 0 #a8a8a8"
-        this.jugador2.style.background = "none"
-        this.jugador2.style.color = "black"
-        this.jugador1.style.boxShadow = "0 5px 0 #969696"
+        this.jugador1.style.background = "#5b5b5b";
+        this.jugador1.style.color = "white";
+        this.jugador1.style.boxShadow = "0 5px 0 #a8a8a8";
+        this.jugador2.style.background = "none";
+        this.jugador2.style.color = "black";
+        this.jugador1.style.boxShadow = "0 5px 0 #969696";
+        this.diff.style.display = "flex";
     },
     twoplayer() {
         gamevalues.mode = 2;
         this.restart();
-        this.jugador1.style.background = "none"
-        this.jugador1.style.color = "black"
-        this.jugador1.style.boxShadow = "0 5px 0 #969696"
-        this.jugador2.style.background = "#5b5b5b"
-        this.jugador2.style.color = "white"
-        this.jugador1.style.boxShadow = "0 5px 0 #a8a8a8"
+        this.jugador1.style.background = "none";
+        this.jugador1.style.color = "black";
+        this.jugador1.style.boxShadow = "0 5px 0 #969696";
+        this.jugador2.style.background = "#5b5b5b";
+        this.jugador2.style.color = "white";
+        this.jugador1.style.boxShadow = "0 5px 0 #a8a8a8";
+        this.diff.style.display = "none";
+    },
+    easy() {
+        gamevalues.diff=1;
+        this.diff1.style.background = "#5b5b5b";
+        this.diff1.style.color = "white";
+        this.diff1.style.boxShadow = "0 5px 0 #a8a8a8";
+        this.diff2.style.background = "none";
+        this.diff2.style.color = "black";
+        this.diff2.style.boxShadow = "0 5px 0 #969696";
+        this.diff3.style.background = "none";
+        this.diff3.style.color = "black";
+        this.diff3.style.boxShadow = "0 5px 0 #969696";
+        this.restart();
+    },
+    hard() {
+        gamevalues.diff=3;
+        this.diff1.style.background = "none";
+        this.diff1.style.color = "black";
+        this.diff1.style.boxShadow = "0 5px 0 #969696";
+        this.diff2.style.background = "none";
+        this.diff2.style.color = "black";
+        this.diff2.style.boxShadow = "0 5px 0 #969696";
+        this.diff3.style.background = "#5b5b5b";
+        this.diff3.style.color = "white";
+        this.diff3.style.boxShadow = "0 5px 0 #a8a8a8";
+        this.restart();
+    },
+    medium() {
+        gamevalues.diff=2;
+        this.diff1.style.background = "none";
+        this.diff1.style.color = "black";
+        this.diff1.style.boxShadow = "0 5px 0 #969696";
+        this.diff2.style.background = "#5b5b5b";
+        this.diff2.style.color = "white";
+        this.diff2.style.boxShadow = "0 5px 0 #a8a8a8";
+        this.diff3.style.background = "none";
+        this.diff3.style.color = "black";
+        this.diff3.style.boxShadow = "0 5px 0 #969696";
+        this.restart();
+        
     }
 }
 

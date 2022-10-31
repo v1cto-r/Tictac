@@ -11,8 +11,13 @@
     <div id="main">
         <div id="header">
             <div id="selector">
-                <div class="mode" id="onep" onclick="game.oneplayer()">1 Jugador</div>
+                <div class="mode" id="onep" onclick="game.oneplayer(),game.hard()">1 Jugador</div>
                 <div class="mode" id="twop" onclick="game.twoplayer()">2 Jugadores</div>
+            </div>
+            <div id="diff">
+                <div class="mode diff" id="easy" onclick="game.easy()">Facil</div>
+                <div class="mode diff" id="medium" onclick="game.medium()">Medio</div>
+                <div class="mode diff" id="hard" onclick="game.hard()">Dificil</div>
             </div>
             <div id="scoreboard">
                 <h2 id="score1">"O": <span id="Oscore">0</span></h2>
