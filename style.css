@@ -107,6 +107,22 @@ body {
     margin-right: 0.8rem;
 }
 
+.button-inactive {
+    background: none;
+    color: black;
+    box-shadow: 0 5px 0 #969696;
+}
+
+.button-active {
+    background: #5b5b5b;
+    color: white;
+    box-shadow: 0 5px 0 #a8a8a8;
+}
+
+.button-active:hover {
+    background: #303030;
+}
+
 .m-y {
     border-left: 4px black solid;
     border-right: 4px black solid;

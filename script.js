@@ -8,7 +8,9 @@ const gamevalues = {
     player1: 0,
     player2: 0,
     oscore: document.getElementById("Oscore"),
-    xscore: document.getElementById("Xscore")
+    xscore: document.getElementById("Xscore"),
+    cross: "cross.svg",
+    circle: "circle.svg",
 }
 
 const game = {
@@ -119,64 +121,38 @@ const game = {
         if(gamevalues.turn==1) {
             ai.makeplay();
         }
-        this.jugador1.style.background = "#5b5b5b";
-        this.jugador1.style.color = "white";
-        this.jugador1.style.boxShadow = "0 5px 0 #a8a8a8";
-        this.jugador2.style.background = "none";
-        this.jugador2.style.color = "black";
-        this.jugador1.style.boxShadow = "0 5px 0 #969696";
+        this.jugador1.classList.add("button-active");
+        this.jugador2.classList.remove("button-active");
         this.diff.style.display = "flex";
     },
     twoplayer() {
         gamevalues.mode = 2;
         this.restart();
-        this.jugador1.style.background = "none";
-        this.jugador1.style.color = "black";
-        this.jugador1.style.boxShadow = "0 5px 0 #969696";
-        this.jugador2.style.background = "#5b5b5b";
-        this.jugador2.style.color = "white";
-        this.jugador1.style.boxShadow = "0 5px 0 #a8a8a8";
+        this.jugador2.classList.add("button-active");
+        this.jugador1.classList.remove("button-active");
         this.diff.style.display = "none";
     },
     easy() {
         gamevalues.diff=1;
-        this.diff1.style.background = "#5b5b5b";
-        this.diff1.style.color = "white";
-        this.diff1.style.boxShadow = "0 5px 0 #a8a8a8";
-        this.diff2.style.background = "none";
-        this.diff2.style.color = "black";
-        this.diff2.style.boxShadow = "0 5px 0 #969696";
-        this.diff3.style.background = "none";
-        this.diff3.style.color = "black";
-        this.diff3.style.boxShadow = "0 5px 0 #969696";
+        this.diff1.classList.add("button-active");
+        this.diff2.classList.remove("button-active");
+        this.diff3.classList.remove("button-active");
         this.restart();
+    }, 
+    medium() {
+        gamevalues.diff=2;
+        this.diff1.classList.remove("button-active");
+        this.diff2.classList.add("button-active");
+        this.diff3.classList.remove("button-active");
+        this.restart();
+        
     },
     hard() {
         gamevalues.diff=3;
-        this.diff1.style.background = "none";
-        this.diff1.style.color = "black";
-        this.diff1.style.boxShadow = "0 5px 0 #969696";
-        this.diff2.style.background = "none";
-        this.diff2.style.color = "black";
-        this.diff2.style.boxShadow = "0 5px 0 #969696";
-        this.diff3.style.background = "#5b5b5b";
-        this.diff3.style.color = "white";
-        this.diff3.style.boxShadow = "0 5px 0 #a8a8a8";
+        this.diff1.classList.remove("button-active");
+        this.diff2.classList.remove("button-active");
+        this.diff3.classList.add("button-active");
         this.restart();
-    },
-    medium() {
-        gamevalues.diff=2;
-        this.diff1.style.background = "none";
-        this.diff1.style.color = "black";
-        this.diff1.style.boxShadow = "0 5px 0 #969696";
-        this.diff2.style.background = "#5b5b5b";
-        this.diff2.style.color = "white";
-        this.diff2.style.boxShadow = "0 5px 0 #a8a8a8";
-        this.diff3.style.background = "none";
-        this.diff3.style.color = "black";
-        this.diff3.style.boxShadow = "0 5px 0 #969696";
-        this.restart();
-        
     }
 }
 
@@ -186,7 +162,7 @@ function clicksquare(sqrnum) {
             if (gamevalues.winner!==true) {
                 if (game.grid[sqrnum]==null) {
                     let editsqr = document.getElementById(sqrnum);
-                    editsqr.firstElementChild.src="cross.svg";
+                    editsqr.firstElementChild.src=gamevalues.cross;
                     game.grid[sqrnum]=2;
                     ai.fakegrid[sqrnum]=2
                     game.changeturn();
@@ -205,12 +181,12 @@ function clicksquare(sqrnum) {
             if (game.grid[sqrnum]==null) {
                 let editsqr = document.getElementById(sqrnum);
                 if (gamevalues.turn==1) {
-                    editsqr.firstElementChild.src="circle.svg";
+                    editsqr.firstElementChild.src=gamevalues.circle;
                     game.grid[sqrnum]=1;
                     ai.fakegrid[sqrnum]=1;
                     game.changeturn();
                 } else if (gamevalues.turn==2) {
-                    editsqr.firstElementChild.src="cross.svg";
+                    editsqr.firstElementChild.src=gamevalues.cross;
                     game.grid[sqrnum]=2;
                     ai.fakegrid[sqrnum]=2
                     game.changeturn();
@@ -230,7 +206,7 @@ function clicksquare(sqrnum) {
 
 function aiclicksquare(sqrnum) {
     let editsqr = document.getElementById(sqrnum);
-    editsqr.firstElementChild.src="circle.svg";
+    editsqr.firstElementChild.src=gamevalues.circle;
     game.grid[sqrnum]=1;
     ai.fakegrid[sqrnum]=1;
     game.changeturn();
