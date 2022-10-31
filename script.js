@@ -1,6 +1,9 @@
 const gamevalues = {
     turn: 1,
+    play: 0,
     winner: false,
+    tie: false,
+    mode: 2,
     player1: 0,
     player2: 0,
     oscore: document.getElementById("Oscore"),
@@ -11,6 +14,8 @@ const game = {
     turnoelement: document.getElementById("turno"),
     headerelement: document.getElementById("description"),
     winnerelement: document.getElementById("winner"),
+    jugador1: document.getElementById("onep"),
+    jugador2: document.getElementById("twop"),
     gridnames: [
         "sqr1","sqr2","sqr3","sqr4","sqr5","sqr6","sqr7","sqr8","sqr9"
     ],
@@ -27,10 +32,19 @@ const game = {
     restart() {
         this.restartgrid();
         this.restartimg();
+        ai.resetai();
         gamevalues.turn=1;
+        gamevalues.play=0;
         gamevalues.winner=false;
+        gamevalues.tie=false;
         this.winnerelement.style.display="none";
         this.randomstart();
+        if(gamevalues.mode==1) {
+            if(gamevalues.turn==1) {
+                ai.makeplay();
+            }
+        }
+        
     },
     checkforwinner() {
         for(let i=0;i<game.combinations.length;i++) {
@@ -54,6 +68,7 @@ const game = {
         for(let i=0;i<game.gridnames.length;i++) {
             let gridnames = game.gridnames;
             game.grid[gridnames[i]] = null;
+            ai.fakegrid[gridnames[i]] = null;
         }
     },
     restartimg() {
@@ -82,38 +97,98 @@ const game = {
             let sum = 0;
             for(let i=0;i<this.gridnames.length;i++) {
                 let sqr = this.gridnames[i];
-                console.log(sqr);
                 if(this.grid[sqr]!=null) {
                     sum = sum+1;
                 }
             }
             if(sum==9) {
-                console.log("tie")
+                gamevalues.tie=true;
                 this.winnerelement.innerHTML="<h2>Empate</h2>"
                 this.winnerelement.style.display="flex";
             }
         }
+    },
+    oneplayer() {
+        gamevalues.mode = 1;
+        this.restart();
+        if(gamevalues.turn==1) {
+            ai.makeplay();
+        }
+        this.jugador1.style.background = "#5b5b5b"
+        this.jugador1.style.color = "white"
+        this.jugador1.style.boxShadow = "0 5px 0 #a8a8a8"
+        this.jugador2.style.background = "none"
+        this.jugador2.style.color = "black"
+        this.jugador1.style.boxShadow = "0 5px 0 #969696"
+    },
+    twoplayer() {
+        gamevalues.mode = 2;
+        this.restart();
+        this.jugador1.style.background = "none"
+        this.jugador1.style.color = "black"
+        this.jugador1.style.boxShadow = "0 5px 0 #969696"
+        this.jugador2.style.background = "#5b5b5b"
+        this.jugador2.style.color = "white"
+        this.jugador1.style.boxShadow = "0 5px 0 #a8a8a8"
     }
 }
 
 function clicksquare(sqrnum) {
-    if (gamevalues.winner!==true) {
-        if (game.grid[sqrnum]==null) {
-            let editsqr = document.getElementById(sqrnum);
-            if (gamevalues.turn==1) {
-                editsqr.firstElementChild.src="circle.svg";
-                game.grid[sqrnum]=1;
-                game.changeturn();
-            } else if (gamevalues.turn==2) {
-                editsqr.firstElementChild.src="cross.svg";
-                game.grid[sqrnum]=2;
-                game.changeturn();
+    if (gamevalues.mode == 1) {
+        if (gamevalues.turn == 2) {
+            if (gamevalues.winner!==true) {
+                if (game.grid[sqrnum]==null) {
+                    let editsqr = document.getElementById(sqrnum);
+                    editsqr.firstElementChild.src="cross.svg";
+                    game.grid[sqrnum]=2;
+                    ai.fakegrid[sqrnum]=2
+                    game.changeturn();
+                    gamevalues.play++;
+                    game.checkforwinner();
+                    game.checktie();
+                    game.updatescore();
+                    ai.makeplay();
+                } else {
+                    return;
+                }
             }
-        game.checkforwinner();
-        game.checktie();
-        game.updatescore();
+        }
+    } else if (gamevalues.mode == 2) {
+        if (gamevalues.winner!==true) {
+            if (game.grid[sqrnum]==null) {
+                let editsqr = document.getElementById(sqrnum);
+                if (gamevalues.turn==1) {
+                    editsqr.firstElementChild.src="circle.svg";
+                    game.grid[sqrnum]=1;
+                    ai.fakegrid[sqrnum]=1;
+                    game.changeturn();
+                } else if (gamevalues.turn==2) {
+                    editsqr.firstElementChild.src="cross.svg";
+                    game.grid[sqrnum]=2;
+                    ai.fakegrid[sqrnum]=2
+                    game.changeturn();
+                }
+                gamevalues.play++;
+                game.checkforwinner();
+                game.checktie();
+                game.updatescore();
+            } else {
+                return;
+            }
         } else {
-            return;
+            return
         }
     }
+}
+
+function aiclicksquare(sqrnum) {
+    let editsqr = document.getElementById(sqrnum);
+    editsqr.firstElementChild.src="circle.svg";
+    game.grid[sqrnum]=1;
+    ai.fakegrid[sqrnum]=1;
+    game.changeturn();
+    gamevalues.play++;
+    game.checkforwinner();
+    game.checktie();
+    game.updatescore();
 }
