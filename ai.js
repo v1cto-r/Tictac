@@ -38,27 +38,26 @@ const ai = {
         }
         if (gamevalues.diff===3) {
             square = this.findBestMove();
-            aiclicksquare(square);
+            this.aiclicksquare(square);
         } else if (gamevalues.diff===2) {
             if (this.medturn==1) {
                 this.randommove();
                 this.medturn=2;
             } else {
                 square = this.findBestMove();
-                aiclicksquare(square);
+                this.aiclicksquare(square);
                 this.medturn=1
             }
         } else if (gamevalues.diff===1) {
             this.randommove();
         }
-        
     },
     randommove() {
         leftsquares = this.fakeleftmoves();
         left = leftsquares.length;
         let random = Math.floor(Math.random() * left);
         square = leftsquares[random];
-        aiclicksquare(square);
+        this.aiclicksquare(square);
     },
     resetai() {
         this.startingcorner = null;
@@ -108,5 +107,16 @@ const ai = {
             }
         }
         return bestMove
+    },
+    aiclicksquare(sqrnum) {
+        let editsqr = document.getElementById(sqrnum);
+        editsqr.firstElementChild.src=gamevalues.circle;
+        game.grid[sqrnum]=1;
+        ai.fakegrid[sqrnum]=1;
+        game.changeturn();
+        gamevalues.play++;
+        game.checkforwinner();
+        game.checktie();
+        game.updatescore();
     }
 }

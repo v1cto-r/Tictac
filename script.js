@@ -51,7 +51,6 @@ const game = {
                 ai.makeplay();
             }
         }
-        
     },
     checkforwinner() {
         for(let i=0;i<game.combinations.length;i++) {
@@ -153,65 +152,52 @@ const game = {
         this.diff2.classList.remove("button-active");
         this.diff3.classList.add("button-active");
         this.restart();
-    }
-}
-
-function clicksquare(sqrnum) {
-    if (gamevalues.mode == 1) {
-        if (gamevalues.turn == 2) {
+    },
+    clicksquare(sqrnum) {
+        if (gamevalues.mode == 1) {
+            if (gamevalues.turn == 2) {
+                if (gamevalues.winner!==true) {
+                    if (game.grid[sqrnum]==null) {
+                        let editsqr = document.getElementById(sqrnum);
+                        editsqr.firstElementChild.src=gamevalues.cross;
+                        game.grid[sqrnum]=2;
+                        ai.fakegrid[sqrnum]=2
+                        game.changeturn();
+                        gamevalues.play++;
+                        game.checkforwinner();
+                        game.checktie();
+                        game.updatescore();
+                        ai.makeplay();
+                    } else {
+                        return;
+                    }
+                }
+            }
+        } else if (gamevalues.mode == 2) {
             if (gamevalues.winner!==true) {
                 if (game.grid[sqrnum]==null) {
                     let editsqr = document.getElementById(sqrnum);
-                    editsqr.firstElementChild.src=gamevalues.cross;
-                    game.grid[sqrnum]=2;
-                    ai.fakegrid[sqrnum]=2
-                    game.changeturn();
+                    if (gamevalues.turn==1) {
+                        editsqr.firstElementChild.src=gamevalues.circle;
+                        game.grid[sqrnum]=1;
+                        ai.fakegrid[sqrnum]=1;
+                        game.changeturn();
+                    } else if (gamevalues.turn==2) {
+                        editsqr.firstElementChild.src=gamevalues.cross;
+                        game.grid[sqrnum]=2;
+                        ai.fakegrid[sqrnum]=2
+                        game.changeturn();
+                    }
                     gamevalues.play++;
                     game.checkforwinner();
                     game.checktie();
                     game.updatescore();
-                    ai.makeplay();
                 } else {
                     return;
                 }
-            }
-        }
-    } else if (gamevalues.mode == 2) {
-        if (gamevalues.winner!==true) {
-            if (game.grid[sqrnum]==null) {
-                let editsqr = document.getElementById(sqrnum);
-                if (gamevalues.turn==1) {
-                    editsqr.firstElementChild.src=gamevalues.circle;
-                    game.grid[sqrnum]=1;
-                    ai.fakegrid[sqrnum]=1;
-                    game.changeturn();
-                } else if (gamevalues.turn==2) {
-                    editsqr.firstElementChild.src=gamevalues.cross;
-                    game.grid[sqrnum]=2;
-                    ai.fakegrid[sqrnum]=2
-                    game.changeturn();
-                }
-                gamevalues.play++;
-                game.checkforwinner();
-                game.checktie();
-                game.updatescore();
             } else {
-                return;
+                return
             }
-        } else {
-            return
         }
     }
-}
-
-function aiclicksquare(sqrnum) {
-    let editsqr = document.getElementById(sqrnum);
-    editsqr.firstElementChild.src=gamevalues.circle;
-    game.grid[sqrnum]=1;
-    ai.fakegrid[sqrnum]=1;
-    game.changeturn();
-    gamevalues.play++;
-    game.checkforwinner();
-    game.checktie();
-    game.updatescore();
 }
